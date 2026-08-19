@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MyClone</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #101114;
+      color: white;
+      text-align: center;
+    }
+    .app {
+      max-width: 700px;
+      margin: 60px auto;
+      padding: 30px;
+    }
+    .card {
+      background: #1b1d24;
+      border-radius: 20px;
+      padding: 30px;
+    }
+    button {
+      border: 0;
+      border-radius: 12px;
+      padding: 14px 22px;
+      margin: 8px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+    .on { background: #8b5cf6; color: white; }
+    .off { background: #444; color: white; }
+    input {
+      padding: 13px;
+      border-radius: 10px;
+      border: 1px solid #444;
+      background: #111;
+      color: white;
+      width: 70%;
+    }
+    #message {
+      margin-top: 20px;
+      color: #aaa;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="app">
+    <div class="card">
+      <h1>MyClone</h1>
+      <p>Your personal Snapchat companion</p>
+
+      <h2 id="status">Clone: ON</h2>
+
+      <button class="on" onclick="turnOn()">Turn On</button>
+      <button class="off" onclick="turnOff()">SHUT OFF CLONE</button>
+
+      <hr>
+
+      <h2>🔥 Streak Guard</h2>
+      <input id="friend" placeholder="Friend's name">
+      <br>
+      <input id="streak" type="number" placeholder="Streak number">
+      <br>
+      <button class="on" onclick="saveStreak()">Save Streak</button>
+
+      <p id="message"></p>
+    </div>
+  </div>
+
+  <script>
+    let cloneOn = true;
+
+    function turnOn() {
+      cloneOn = true;
+      document.getElementById("status").textContent = "Clone: ON";
+      document.getElementById("message").textContent =
+        "Your clone is active.";
+    }
+
+    function turnOff() {
+      cloneOn = false;
+      document.getElementById("status").textContent = "Clone: OFF";
+      document.getElementById("message").textContent =
+        "Clone shut off.";
+    }
+
+    function saveStreak() {
+      if (!cloneOn) {
+        document.getElementById("message").textContent =
+          "Clone is currently OFF.";
+        return;
+      }
+
+      const friend = document.getElementById("friend").value;
+      const streak = document.getElementById("streak").value;
+
+      if (!friend || !streak) {
+        document.getElementById("message").textContent =
+          "Enter a friend and streak number.";
+        return;
+      }
+
+      localStorage.setItem(
+        "streak_" + friend,
+        streak
+      );
+
+      document.getElementById("message").textContent =
+        friend + "'s " + streak + " day streak was saved.";
+    }
+  </script>
+</body>
+</html>
