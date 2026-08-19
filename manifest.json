@@ -1,0 +1,8 @@
+{
+  "name": "MyClone",
+  "short_name": "MyClone",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#0d0e12",
+  "theme_color": "#8b5cf6"
+}
