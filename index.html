@@ -1,117 +1,537 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>MyClone</title>
-  <style>
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: #101114;
-      color: white;
-      text-align: center;
-    }
-    .app {
-      max-width: 700px;
-      margin: 60px auto;
-      padding: 30px;
-    }
-    .card {
-      background: #1b1d24;
-      border-radius: 20px;
-      padding: 30px;
-    }
-    button {
-      border: 0;
-      border-radius: 12px;
-      padding: 14px 22px;
-      margin: 8px;
-      cursor: pointer;
-      font-weight: bold;
-    }
-    .on { background: #8b5cf6; color: white; }
-    .off { background: #444; color: white; }
-    input {
-      padding: 13px;
-      border-radius: 10px;
-      border: 1px solid #444;
-      background: #111;
-      color: white;
-      width: 70%;
-    }
-    #message {
-      margin-top: 20px;
-      color: #aaa;
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MyClone</title>
+
+<style>
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #0d0e12;
+  color: #fff;
+}
+
+.app {
+  max-width: 900px;
+  margin: 30px auto;
+  padding: 20px;
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 25px;
+}
+
+.header h1 {
+  font-size: 42px;
+  margin: 5px;
+}
+
+.subtitle {
+  color: #aaa;
+}
+
+.status {
+  font-size: 22px;
+  font-weight: bold;
+  margin: 18px;
+}
+
+.card {
+  background: #191b22;
+  border-radius: 18px;
+  padding: 24px;
+  margin-bottom: 20px;
+  border: 1px solid #292c35;
+}
+
+button {
+  border: 0;
+  border-radius: 12px;
+  padding: 13px 20px;
+  font-weight: bold;
+  cursor: pointer;
+  margin: 5px;
+}
+
+.primary {
+  background: #8b5cf6;
+  color: white;
+}
+
+.danger {
+  background: #ef4444;
+  color: white;
+}
+
+.secondary {
+  background: #363943;
+  color: white;
+}
+
+input, textarea {
+  width: 100%;
+  background: #0e0f12;
+  color: white;
+  border: 1px solid #41444d;
+  border-radius: 10px;
+  padding: 13px;
+  margin: 6px 0;
+}
+
+textarea {
+  min-height: 90px;
+  resize: vertical;
+}
+
+.chat {
+  height: 280px;
+  overflow-y: auto;
+  background: #0d0e12;
+  border-radius: 12px;
+  padding: 15px;
+}
+
+.message {
+  padding: 10px 14px;
+  border-radius: 15px;
+  margin: 8px 0;
+  max-width: 75%;
+}
+
+.mine {
+  background: #8b5cf6;
+  margin-left: auto;
+}
+
+.clone {
+  background: #30323b;
+}
+
+.preview {
+  max-width: 220px;
+  max-height: 220px;
+  border-radius: 12px;
+  margin-top: 8px;
+}
+
+.row {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.small {
+  color: #999;
+  font-size: 14px;
+}
+
+.feature {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 12px;
+}
+
+.feature div {
+  background: #22242c;
+  padding: 16px;
+  border-radius: 12px;
+}
+
+.off {
+  opacity: .55;
+}
+</style>
 </head>
 
 <body>
-  <div class="app">
-    <div class="card">
-      <h1>MyClone</h1>
-      <p>Your personal Snapchat companion</p>
 
-      <h2 id="status">Clone: ON</h2>
+<div class="app">
 
-      <button class="on" onclick="turnOn()">Turn On</button>
-      <button class="off" onclick="turnOff()">SHUT OFF CLONE</button>
+  <div class="header">
+    <h1>MyClone</h1>
+    <div class="subtitle">Your personal digital companion</div>
 
-      <hr>
-
-      <h2>🔥 Streak Guard</h2>
-      <input id="friend" placeholder="Friend's name">
-      <br>
-      <input id="streak" type="number" placeholder="Streak number">
-      <br>
-      <button class="on" onclick="saveStreak()">Save Streak</button>
-
-      <p id="message"></p>
+    <div class="status" id="status">
+      Clone: ON
     </div>
+
+    <button class="primary" onclick="turnOn()">Turn On</button>
+    <button class="danger" onclick="turnOff()">SHUT OFF CLONE</button>
   </div>
 
-  <script>
-    let cloneOn = true;
+  <div class="card" id="mainApp">
 
-    function turnOn() {
-      cloneOn = true;
-      document.getElementById("status").textContent = "Clone: ON";
-      document.getElementById("message").textContent =
-        "Your clone is active.";
-    }
+    <h2>🔗 Account Connection</h2>
 
-    function turnOff() {
-      cloneOn = false;
-      document.getElementById("status").textContent = "Clone: OFF";
-      document.getElementById("message").textContent =
-        "Clone shut off.";
-    }
+    <p>
+      Connect your supported accounts here. This demo does not directly
+      control Snapchat or bypass Snapchat's permissions.
+    </p>
 
-    function saveStreak() {
-      if (!cloneOn) {
-        document.getElementById("message").textContent =
-          "Clone is currently OFF.";
-        return;
-      }
+    <button class="primary" onclick="connectSnapchat()">
+      Connect Snapchat
+    </button>
 
-      const friend = document.getElementById("friend").value;
-      const streak = document.getElementById("streak").value;
+    <p id="connection" class="small">
+      Snapchat: Not connected
+    </p>
 
-      if (!friend || !streak) {
-        document.getElementById("message").textContent =
-          "Enter a friend and streak number.";
-        return;
-      }
+  </div>
 
-      localStorage.setItem(
-        "streak_" + friend,
-        streak
-      );
+  <div class="card">
 
-      document.getElementById("message").textContent =
-        friend + "'s " + streak + " day streak was saved.";
-    }
-  </script>
+    <h2>🔥 Streak Guard</h2>
+
+    <input id="friend" placeholder="Friend's name">
+
+    <input id="streak" type="number" placeholder="Current streak">
+
+    <button class="primary" onclick="saveStreak()">
+      Save Streak
+    </button>
+
+    <p id="streakResult" class="small"></p>
+
+  </div>
+
+  <div class="card">
+
+    <h2>💬 Clone Chat</h2>
+
+    <div class="chat" id="chat">
+
+      <div class="message clone">
+        Hey! I'm your clone. What should I reply to?
+      </div>
+
+    </div>
+
+    <textarea
+      id="message"
+      placeholder="Write a message..."
+    ></textarea>
+
+    <div class="row">
+      <button class="primary" onclick="sendMessage()">
+        Send
+      </button>
+
+      <label>
+        <input
+          type="file"
+          id="imageInput"
+          accept="image/*"
+          style="display:none"
+          onchange="sendImage(event)"
+        >
+
+        <button class="secondary"
+          onclick="document.getElementById('imageInput').click()">
+          🖼️ Send Image
+        </button>
+      </label>
+    </div>
+
+  </div>
+
+  <div class="card">
+
+    <h2>📞 Calls</h2>
+
+    <p class="small">
+      Call controls are simulated in this web version. Actual Snapchat
+      call answering requires supported platform/API permissions.
+    </p>
+
+    <div class="row">
+
+      <button class="primary" onclick="simulateCall()">
+        📞 Test Incoming Call
+      </button>
+
+      <button class="secondary" onclick="endCall()">
+        End Call
+      </button>
+
+    </div>
+
+    <p id="callStatus" class="small">
+      No active call
+    </p>
+
+  </div>
+
+  <div class="card">
+
+    <h2>⚙️ Clone Features</h2>
+
+    <div class="feature">
+
+      <div>
+        <h3>🧠 Personal Clone</h3>
+        <p class="small">
+          Stores your local preferences and clone state.
+        </p>
+      </div>
+
+      <div>
+        <h3>🔥 Streak Tracking</h3>
+        <p class="small">
+          Save streak information locally.
+        </p>
+      </div>
+
+      <div>
+        <h3>🖼️ Image Sharing</h3>
+        <p class="small">
+          Select images and display them inside the conversation.
+        </p>
+      </div>
+
+      <div>
+        <h3>🛑 Instant Shut-Off</h3>
+        <p class="small">
+          Turn the clone off whenever you want.
+        </p>
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+
+<script>
+
+let cloneOn = true;
+
+function updateStatus() {
+
+  const status = document.getElementById("status");
+  const app = document.getElementById("mainApp");
+
+  if (cloneOn) {
+    status.textContent = "Clone: ON";
+    app.classList.remove("off");
+  } else {
+    status.textContent = "Clone: OFF";
+    app.classList.add("off");
+  }
+}
+
+function turnOn() {
+
+  cloneOn = true;
+
+  localStorage.setItem("cloneOn", "true");
+
+  updateStatus();
+
+  addCloneMessage("Clone turned back on.");
+}
+
+function turnOff() {
+
+  cloneOn = false;
+
+  localStorage.setItem("cloneOn", "false");
+
+  updateStatus();
+
+  addCloneMessage("Clone is now OFF. Nothing will be automated by this page.");
+}
+
+function addCloneMessage(text) {
+
+  const chat = document.getElementById("chat");
+
+  const div = document.createElement("div");
+
+  div.className = "message clone";
+
+  div.textContent = text;
+
+  chat.appendChild(div);
+
+  chat.scrollTop = chat.scrollHeight;
+}
+
+function sendMessage() {
+
+  if (!cloneOn) {
+
+    alert("Clone is OFF.");
+
+    return;
+  }
+
+  const input = document.getElementById("message");
+
+  const text = input.value.trim();
+
+  if (!text) return;
+
+  const chat = document.getElementById("chat");
+
+  const mine = document.createElement("div");
+
+  mine.className = "message mine";
+
+  mine.textContent = text;
+
+  chat.appendChild(mine);
+
+  input.value = "";
+
+  setTimeout(() => {
+
+    addCloneMessage(
+      "Clone received your message. Connect an approved messaging service to enable real replies."
+    );
+
+  }, 500);
+}
+
+function sendImage(event) {
+
+  if (!cloneOn) {
+
+    alert("Clone is OFF.");
+
+    return;
+  }
+
+  const file = event.target.files[0];
+
+  if (!file) return;
+
+  const url = URL.createObjectURL(file);
+
+  const chat = document.getElementById("chat");
+
+  const div = document.createElement("div");
+
+  div.className = "message mine";
+
+  const image = document.createElement("img");
+
+  image.src = url;
+
+  image.className = "preview";
+
+  div.appendChild(image);
+
+  chat.appendChild(div);
+
+  chat.scrollTop = chat.scrollHeight;
+
+  setTimeout(() => {
+
+    addCloneMessage(
+      "Image received. The web app can display images, but sending them through Snapchat requires an approved integration."
+    );
+
+  }, 500);
+}
+
+function saveStreak() {
+
+  const friend =
+    document.getElementById("friend").value.trim();
+
+  const streak =
+    document.getElementById("streak").value;
+
+  if (!friend || !streak) {
+
+    alert("Enter a friend and streak number.");
+
+    return;
+  }
+
+  const data = {
+    friend: friend,
+    streak: streak
+  };
+
+  localStorage.setItem(
+    "streakData",
+    JSON.stringify(data)
+  );
+
+  document.getElementById("streakResult").textContent =
+    friend + "'s " + streak + " day streak was saved on this device.";
+}
+
+function connectSnapchat() {
+
+  alert(
+    "Snapchat connection needs an official supported authorization/API flow. This button does not collect or store your Snapchat password."
+  );
+
+  document.getElementById("connection").textContent =
+    "Snapchat: Awaiting official authorization";
+}
+
+function simulateCall() {
+
+  if (!cloneOn) {
+
+    alert("Clone is OFF.");
+
+    return;
+  }
+
+  document.getElementById("callStatus").textContent =
+    "📞 Test incoming call — clone would need an approved calling integration to answer automatically.";
+}
+
+function endCall() {
+
+  document.getElementById("callStatus").textContent =
+    "No active call";
+}
+
+function loadData() {
+
+  const savedClone =
+    localStorage.getItem("cloneOn");
+
+  if (savedClone !== null) {
+
+    cloneOn = savedClone === "true";
+  }
+
+  const streak =
+    localStorage.getItem("streakData");
+
+  if (streak) {
+
+    const data = JSON.parse(streak);
+
+    document.getElementById("friend").value =
+      data.friend;
+
+    document.getElementById("streak").value =
+      data.streak;
+
+    document.getElementById("streakResult").textContent =
+      data.friend + "'s " +
+      data.streak +
+      " day streak was saved on this device.";
+  }
+
+  updateStatus();
+}
+
+loadData();
+
+</script>
+
 </body>
 </html>
